@@ -2,9 +2,9 @@ import Login from './Login.js';
 
 function Index() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+      <div className="App">
+        <Login />
+      </div>
   );
 }
 

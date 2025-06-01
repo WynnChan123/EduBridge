@@ -1,7 +1,10 @@
 import InputBox from '../components/Input/input';
 import CustomButton from '../components/Button/button';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+
+  const router = useRouter();
   return (
     <div className="flex flex-row">
       <div className="bg-white w-1/2 h-screen">
@@ -20,7 +23,7 @@ export default function Login() {
               <CustomButton
                 color="#2B2F4B"
                 title="Sign In"
-                onClick={() => alert('Button Pressed!')}
+                onClick={() => router.push(`./student`)}
                 className="flex px-8 py-3 text-white text-lg font-bold rounded-full"
               />
             </div>
@@ -34,7 +37,7 @@ export default function Login() {
           <CustomButton 
             color="white"
             title="Sign Up"
-            onClick={()=> alert('Signed Up!')}
+            onClick={()=> router.push(`./Signup`)}
             className="flex px-8 py-3 text-black text-lg font-bold rounded-full"
           />
         </div>
