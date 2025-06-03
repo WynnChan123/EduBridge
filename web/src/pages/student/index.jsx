@@ -1,9 +1,45 @@
-import { React } from 'react';
 import StudentLayout from '../../components/Layouts/StudentLayout';
+import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const StudentDashboard = () => {
+
+  useEffect(() => {
+    // Add a small delay to ensure the component is fully mounted
+    const timer = setTimeout(() => {
+      const showLoginSuccess = localStorage.getItem('showLoginSuccess');
+      if (showLoginSuccess === 'true') {
+        toast.success('Welcome to your dashboard!', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+        });
+        localStorage.removeItem('showLoginSuccess');
+      }
+    }, 100); // Small delay to ensure component is mounted
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <StudentLayout>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="flex flex-col h-[calc(90vh-4rem)]">
         {/* Stats Section */}
         <div className="grid grid-cols-3 gap-4 mb-6 bg-gray-200 p-4 rounded-lg">
