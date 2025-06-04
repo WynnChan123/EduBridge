@@ -15,7 +15,7 @@ const DropDownMenu = ({
     >
         <option value="" disabled>Select Role</option>
         <option value="Student">Student</option>
-        <option value="Teacher">Teacher</option>
+        <option value="Teacher">Tutor</option>
         <option value="Admin">Admin</option>
     </select>
   )

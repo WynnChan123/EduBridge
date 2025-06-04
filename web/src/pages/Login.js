@@ -2,7 +2,7 @@ import InputBox from '../components/Input/input';
 import CustomButton from '../components/Button/button';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,6 +10,28 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    // Add a small delay to ensure the component is fully mounted
+    const timer = setTimeout(() => {
+      const showSignUpSuccess = localStorage.getItem('showSignUpSuccess');
+      if (showSignUpSuccess === 'true') {
+        toast.success('Sign Up Success! You can login now', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'light',
+        });
+        localStorage.removeItem('showLoginSuccess');
+      }
+    }, 100); // Small delay to ensure component is mounted
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const handleLogin = async () => {
     try {
@@ -41,7 +63,18 @@ export default function Login() {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="flex flex-row">
         <div className="bg-white w-1/2 h-screen">
           <div className="flex justify-center pt-20 font-bold text-4xl">
