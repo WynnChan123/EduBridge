@@ -20,7 +20,7 @@ export class AuthService {
   Promise<any> {
     const user = await this.userService.findByEmail(email);
     if(!user){
-      throw new BadRequestException('User not found');
+      throw new BadRequestException('User email not found');
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   async login(user: User): Promise<AccessToken>{
-    const payload = { email: user.email, sub: user.id, role: user.role };
+    const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
     const access_token = this.jwtService.sign(payload);
     return { access_token };
   }

@@ -1,6 +1,8 @@
 import { Body, Controller, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register.dto';
+import { UseGuards, Get, Request } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -29,5 +31,11 @@ export class AuthController {
         return { success: false, message: 'An unexpected error occurred' };
       }
     }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
