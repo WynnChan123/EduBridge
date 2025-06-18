@@ -4,7 +4,7 @@ import TopNavbar from '../NavBar/navbar.jsx';
 
 const StudentLayout = ({ children }) => {
   const [token, setToken] = useState('');
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('Student Name');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -30,7 +30,7 @@ const StudentLayout = ({ children }) => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
+      <Sidebar userName={userName} />
       <div className="flex-1">
         <TopNavbar userName={userName} role="Student" />
         <main className="p-6">

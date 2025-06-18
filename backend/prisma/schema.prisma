@@ -6,17 +6,54 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-}
+} 
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  password String
-  role Role @default(STUDENT)
+  id              String             @id @default(uuid())
+  email           String             @unique
+  name            String?
+  password        String
+  role            Role               @default(STUDENT)
+
+  messages        Message[]
+  chatParticipant ChatParticipant[]
 }
 
-enum Role{
+model ChatParticipant {
+  id        String   @id @default(uuid())
+  userId    String
+  chatId    String
+
+  user      User     @relation(fields: [userId], references: [id])
+  chat      Chat     @relation(fields: [chatId], references: [id])
+
+  joinedAt  DateTime @default(now())
+
+  @@unique([userId, chatId])
+}
+
+model Chat {
+  id            String             @id @default(uuid())
+  title         String?
+  createdAt     DateTime           @default(now())
+  isGroupChat   Boolean            @default(false)
+
+  participants  ChatParticipant[]
+  messages      Message[]
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  senderId  String
+  chatId    String
+
+  sender    User     @relation(fields: [senderId], references: [id])
+  chat      Chat     @relation(fields: [chatId], references: [id])
+}
+
+enum Role {
   STUDENT
   TUTOR
 }

@@ -20,16 +20,21 @@ export const menuItems = [
   { icon: <BookOpen size={20} />, label: 'Enrolled Classes', href: '/student/classes' },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ userName }) => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
 
   return (
     <div
-      className={`bg-blue-100 h-screen p-3 flex flex-col transition-all duration-300 ${
-        collapsed ? 'w-20' : 'w-64'
-      }`}
+      className={`bg-blue-100 h-screen p-3 flex flex-col transition-all duration-300 ${collapsed ? 'w-20' : 'w-64'
+        }`}
     >
+      {!collapsed && (
+        <div className="mb-4">
+          <div className="font-semibold">Welcome to Edubridge,</div>
+          <div>{userName}</div>
+        </div>
+      )}
       {/* Toggle button */}
       <div className="flex justify-end">
         <button
@@ -48,7 +53,7 @@ const Sidebar = () => {
             href={item.href}
             data-tooltip-id={`tooltip-${index}`}
             data-tooltip-content={collapsed ? item.label : ''}
-            className={`flex items-center gap-4 text-black hover:font-bold hover:bg-blue-200 p-2 rounded-md transition ${ router.pathname === item.href ? `bg-blue-200` : ''}`}
+            className={`flex items-center gap-4 text-black hover:font-bold hover:bg-blue-200 p-2 rounded-md transition ${router.pathname === item.href ? `bg-blue-200` : ''}`}
           >
             {item.icon}
             {!collapsed && <span>{item.label}</span>}
